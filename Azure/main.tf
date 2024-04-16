@@ -1,24 +1,38 @@
-resource "azurerm_virtual_network" "VPC" {
-  resource_group_name = azurerm_resource_group.Terraform.name
-  name                = "VPC"
-  location            = "East Asia"
+provider "azurerm" {
+    features {}
+}
+
+resource "azurerm_resource_group" "CloudProjectGroup" {
+  name     = "CloudProject"
+  location = "eastasia"
+}
+
+resource "azurerm_virtual_network" "CloudProjectVPC" {
+  resource_group_name = azurerm_resource_group.CloudProjectGroup.name
+  name                = "cloudnetwork"
+  location            = "eastasia"
 
   address_space = [
-    "10.0.0.0/16",
+    "192.168.0.0/16",
   ]
 }
 
-resource "azurerm_subnet" "Private_Subnet" {
-  virtual_network_name = azurerm_virtual_network.VPC.name
-  resource_group_name  = azurerm_resource_group.Terraform.name
-  name                 = "PS"
+resource "azurerm_subnet" "Private_Subnet1" {
+  virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
+  resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
+  name                 = "PS1"
 
   address_prefixes = [
-    "10.0.0.1/24",
+    "192.168.1.0/24",
   ]
 }
 
-resource "azurerm_resource_group" "Terraform" {
-  name     = "Terraform"
-  location = "East Asia"
+resource "azurerm_subnet" "Private_Subnet2" {
+  virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
+  resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
+  name                 = "PS2"
+
+  address_prefixes = [
+    "192.168.2.0/24",
+  ]
 }
