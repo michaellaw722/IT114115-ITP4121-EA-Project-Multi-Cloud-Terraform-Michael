@@ -1,12 +1,11 @@
-provider "aws" {
-    region = "ap-east-1"
+module "aws-tf" {
+  source = "./AWS"
 }
 
-provider "gcp" {
-    project = "cloud-project"
-    region = "asia-east2"
+module "azure-tf" {
+  source = "./Azure"
 }
 
-provider "azurerm" {
-    features {}
+module "gcp-tf" {
+  source = "./GCP"
 }
