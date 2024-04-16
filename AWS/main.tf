@@ -56,3 +56,12 @@ resource "aws_security_group" "EKS_SG" {
     Name = "EKS_SG"
   }
 }
+
+
+resource "aws_internet_gateway" "internet_gw" {
+  vpc_id = aws_vpc.EKSProject.id
+
+  tags = {
+    Name = "Internet"
+  }
+}
