@@ -45,3 +45,14 @@ resource "aws_subnet" "Private_Subnet1b" {
     Name = "Private_Subnet1b"
   }
 }
+
+
+resource "aws_security_group" "EKS_SG" {
+  name        = "EKS_SG"
+  description = "Allow TLS inbound traffic and all outbound traffic"
+  vpc_id      = aws_vpc.EKSProject.id
+
+  tags = {
+    Name = "EKS_SG"
+  }
+}
