@@ -1,3 +1,8 @@
+provider "aws" {
+  region      = "ap-east-1"
+}
+
+
 resource "aws_vpc" "EKSProject" {
   cidr_block = "172.0.0.0/16"
   
@@ -65,3 +70,23 @@ resource "aws_internet_gateway" "internet_gw" {
     Name = "Internet"
   }
 }
+
+
+resource "aws_nat_gateway" "nat_gw" {
+  subnet_id     = aws_subnet.Public_Subnet1a.id
+  allocation_id = aws_eip.eip1.id
+  tags = {
+    Name = "NATgw"
+  }
+
+  depends_on = [aws_internet_gateway.internet_gw]
+}
+
+
+resource "aws_eip" "eip1" {
+  vpc   = "true"
+  
+  tags = {
+    name = "az1-ip"
+  }
+} 
