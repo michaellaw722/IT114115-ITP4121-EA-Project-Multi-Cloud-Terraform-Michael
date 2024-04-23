@@ -1,66 +1,66 @@
 provider "azurerm" {
-    subscription_id = "8130e691-6554-4046-a6a1-0e03085ef7fa"
+    subscription_id = "${var.subid}"
     features {}
 }
 
 resource "azurerm_resource_group" "CloudProjectGroup" {
-  name     = "CloudProject"
-  location = "eastasia"
+  name     = "${var.RG_name}"
+  location = "${var.az_region}"
 }
 
 resource "azurerm_virtual_network" "CloudProjectVPC" {
   resource_group_name = azurerm_resource_group.CloudProjectGroup.name
-  name                = "cloudnetwork"
-  location            = "eastasia"
+  name                = "${var.Vnet_name}"
+  location            = "${var.az_region}"
 
   address_space = [
-    "192.168.0.0/16",
+    "${var.Vnet_CIDR}",
   ]
 }
 
 resource "azurerm_subnet" "Private_Subnet1" {
   virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
   resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
-  name                 = "privatesubnet1"
+  name                 = "${var.Private_Subnet1_name}"
 
   address_prefixes = [
-    "192.168.1.0/24",
+    "${var.Private_Subnet1_CIDR}",
   ]
 }
 
 resource "azurerm_subnet" "Private_Subnet2" {
   virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
   resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
-  name                 = "privatesubnet2"
+  name                 = "${var.Private_Subnet2_name}"
 
   address_prefixes = [
-    "192.168.2.0/24",
+    "${var.Private_Subnet2_CIDR}",
   ]
 }
 
 resource "azurerm_subnet" "Public_Subnet1" {
   virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
   resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
-  name                 = "publicsubnet1"
+  name                 = "${var.Public_Subnet1_name}"
 
   address_prefixes = [
-    "192.168.3.0/24",
+    "${var.Public_Subnet1_CIDR}",
   ]
 }
 
 resource "azurerm_subnet" "Public_Subnet2" {
   virtual_network_name = azurerm_virtual_network.CloudProjectVPC.name
   resource_group_name  = azurerm_resource_group.CloudProjectGroup.name
-  name                 = "publicsubnet2"
+  name                 = "${var.Public_Subnet2_name}"
 
   address_prefixes = [
-    "192.168.4.0/24",
+    "${var.Public_Subnet2_CIDR}",
   ]
 }
 
 
 resource "azurerm_network_security_group" "aks_nsg" {
-  name                = "aks-nsg"
+  name                = "${var.az_NSG_name}"
   location            = azurerm_virtual_network.CloudProjectVPC.location
   resource_group_name = azurerm_resource_group.CloudProjectGroup.name
 

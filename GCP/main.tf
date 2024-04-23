@@ -1,40 +1,40 @@
 provider "google" {
   credentials = file("myCredentials.json")
-  project     = "terraform-project-420504"
-  region      = "asia-east2"
+  project     = "${var.project_id}"
+  region      = "${var.gcp_region}"
 }
 
 resource "google_compute_network" "CloudProject-network" {
-  project                 = "terraform-project-420504"
-  name                    = "cloudnetwork"
+  project                 = "${var.project_id}"
+  name                    = "${var.network_name}"
   auto_create_subnetworks = false
-  mtu                     = 1460
+  mtu                     = "${var.network_mtu}"
 }
 
 resource "google_compute_subnetwork" "PrivateSubnet1" {
-  name          = "privatesubnet1"
-  ip_cidr_range = "10.0.1.0/24"
-  region        = "asia-east2"
+  name          = "${var.PrivateSubnet1_name}"
+  ip_cidr_range = "${var.PrivateSubnet1_CIDR}"
+  region        = "${var.gcp_region}"
   network       = google_compute_network.CloudProject-network.id
 }
 
 resource "google_compute_subnetwork" "PrivateSubnet2" {
-  name          = "privatesubnet2"
-  ip_cidr_range = "10.0.2.0/24"
-  region        = "asia-east2"
+  name          = "${var.PrivateSubnet2_name}"
+  ip_cidr_range = "${var.PrivateSubnet2_CIDR}"
+  region        = "${var.gcp_region}"
   network       = google_compute_network.CloudProject-network.id
 }
 
 resource "google_compute_subnetwork" "PublicSubnet1" {
-  name          = "publicsubnet1"
-  ip_cidr_range = "10.0.3.0/24"
-  region        = "asia-east2"
+  name          = "${var.PublicSubnet1_name}"
+  ip_cidr_range = "${var.PublicSubnet1_CIDR}"
+  region        = "${var.gcp_region}"
   network       = google_compute_network.CloudProject-network.id
 }
 
 resource "google_compute_subnetwork" "PublicSubnet2" {
-  name          = "publicsubnet2"
-  ip_cidr_range = "10.0.4.0/24"
-  region        = "asia-east2"
+  name          = "${var.PublicSubnet2_name}"
+  ip_cidr_range = "${var.PublicSubnet2_CIDR}"
+  region        = "${var.gcp_region}"
   network       = google_compute_network.CloudProject-network.id
 }
