@@ -1,10 +1,10 @@
 provider "aws" {
-  region      = "ap-east-1"
+  region      = "${var.region}"
 }
 
 
 resource "aws_vpc" "EKSProject" {
-  cidr_block = "172.0.0.0/16"
+  cidr_block = "${var.vpc_cidr}"
   
   tags = {
     Name = "EKSProject"
@@ -13,8 +13,8 @@ resource "aws_vpc" "EKSProject" {
 
 resource "aws_subnet" "Public_Subnet1a" {
   vpc_id            = aws_vpc.EKSProject.id
-  cidr_block        = "172.0.1.0/24"
-  availability_zone = "ap-east-1a"
+  cidr_block        = "${var.publicsubnet1a}"
+  availability_zone = "${var.az1a}"
   
   tags = {
     Name = "Public_Subnet1a"
@@ -23,8 +23,8 @@ resource "aws_subnet" "Public_Subnet1a" {
 
 resource "aws_subnet" "Public_Subnet1b" {
   vpc_id            = aws_vpc.EKSProject.id
-  cidr_block        = "172.0.2.0/24"
-  availability_zone = "ap-east-1b"
+  cidr_block        = "${var.publicsubnet1b}"
+  availability_zone = "${var.az1b}"
   
   tags = {
     Name = "Public_Subnet1b"
@@ -33,8 +33,8 @@ resource "aws_subnet" "Public_Subnet1b" {
 
 resource "aws_subnet" "Private_Subnet1a" {
   vpc_id            = aws_vpc.EKSProject.id
-  cidr_block        = "172.0.3.0/24"
-  availability_zone = "ap-east-1a"
+  cidr_block        = "${var.privatesubnet1a}"
+  availability_zone = "${var.az1a}"
   
   tags = {
     Name = "Private_Subnet1a"
@@ -43,8 +43,8 @@ resource "aws_subnet" "Private_Subnet1a" {
 
 resource "aws_subnet" "Private_Subnet1b" {
   vpc_id            = aws_vpc.EKSProject.id
-  cidr_block        = "172.0.4.0/24"
-  availability_zone = "ap-east-1b"
+  cidr_block        = "${var.privatesubnet1b}"
+  availability_zone = "${var.az1b}"
   
   tags = {
     Name = "Private_Subnet1b"
@@ -84,7 +84,7 @@ resource "aws_nat_gateway" "nat_gw" {
 
 
 resource "aws_eip" "eip1" {
-  vpc   = "true"
+  domain = "vpc"
   
   tags = {
     name = "az1-ip"
