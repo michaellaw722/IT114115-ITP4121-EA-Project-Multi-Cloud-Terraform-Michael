@@ -35,5 +35,5 @@ Copy Auth Code to URL
   ```
 To set use which subscription
   ```sh
-  az account set --subscription 8130e691-6554-4046-a6a1-0e03085ef7fa
+  az account set --subscription <subscription id>
   ```
