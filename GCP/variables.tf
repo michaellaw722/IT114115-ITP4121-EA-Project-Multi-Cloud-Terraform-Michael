@@ -1,5 +1,5 @@
 variable "project_id" {
-    default     = "terraform-project-420504"
+    default     = "<your project_id>"
 }
 
 variable "gcp_region" {

@@ -1,5 +1,5 @@
 variable "subid" {
-    default     = "8130e691-6554-4046-a6a1-0e03085ef7fa"
+    default     = "<your subscription_id>"
 }
 
 variable "az_region" {
